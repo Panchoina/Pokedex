@@ -1,0 +1,67 @@
+.body {
+    margin: 0;
+}
+.ba {
+    background-image: url(img/bo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80% 70%;
+    padding: 13%;
+    
+}
+.bac{
+    background-image: url(img/wawa.png);
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment: fixed;
+}
+.bacc {
+    background-color: #688664;
+    width: 100%;
+    height: 100%;
+}
+.se {
+    background-image: url(img/fle.png);
+    background-repeat: no-repeat;
+    background-size: 30% 90%;
+    background-position: center;
+    border: #688664;
+}
+.a {
+    margin-top: 10%;
+    margin-bottom : 15%;
+}
+.a a{
+    align-items: center;
+}
+.c {
+    margin-left: 25% ;
+    margin-right: -114% ;
+}
+.im img{
+    display: flex;
+    width: 7%;
+    height: 60%;
+}
+.for {
+    margin-right: 60%;
+    padding: 3%;
+}
+.ta {
+    margin-left: 40%;
+    margin-right: -30%;
+    margin-bottom: 5%
+}
+/* imagenes que aparecen en la pokedex */
+.image-container img {
+    width: 23%; /* Ajusta el ancho al 100% del contenedor */
+    height: 100%; /* Ajusta la altura automáticamente para mantener la proporción */
+    align-items: center;
+}
+.image-container {
+    margin-bottom: 5%;
+}
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
