@@ -7,11 +7,6 @@ const verificar = async (id) => {
         div.innerHTML = '<span class="badge bg-danger">El campo es obligatorio</span>'
     }
     else {
-        const existe = await verificarNumeroExistente(input.value);
-        if (existe) {
-            input.classList.add('is-invalid');
-            div.innerHTML = '<span class="badge bg-danger">El número ya está en uso</span>';
-        }
         if (id == 'numero'){
             div.innerHTML = ''
             if (input.value > 42) {
@@ -25,6 +20,7 @@ const verificar = async (id) => {
                 div.innerHTML = '<span class="badge bg-danger">No Puede Ingresar Pensando A Futuro</span>'
             }
         }
+
     }
 }
 const validarFecha = (fecha) => {
@@ -48,17 +44,4 @@ const soloNumero = (evt) => {
     if (evt.keyCode >= 48 && evt.keyCode <= 57)
         return true
     return false
-}
-const verificarNumeroExistente = async (num) => {
-    return new Promise((resolve, reject) => {
-        getAll(item => {
-            let existe = false;
-            item = doc.data();
-            if (item.numero == num) {
-                existe = true;
-            }
-            else{
-            existe = false;}
-        });
-    });
 }
