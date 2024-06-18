@@ -1,32 +1,50 @@
-import { edit, getAll, remove, save, selectOne, subirImagen, mostrarImagenesEnLista } from "./firebase.js"
+import { edit, getAll, remove, save, selectOne, subirImagen, checkarNombre } from "./firebase.js"
 
 let id = 0
 
 document.getElementById('btnGuardar').addEventListener('click', async () => {
     document.querySelectorAll('.we').forEach(item => {
         verificar(item.id)
-    })   
-    const url = await subirImagen(); // Espera a que se suba la imagen y obtener la URL
-    console.log(url)
+    })
+    const num = document.getElementById('numero').value.trim()
     if (document.querySelectorAll('.is-invalid').length == 0) {
-        const sexo = document.querySelector('input[name="sexo"]:checked');
-        const sexoValue = sexo ? sexo.value : '';
-        const poke = {
-            numero: document.getElementById('numero').value,
-            nom: document.getElementById('nombre').value,
-            tipo: document.getElementById('tipo').value,
-            tipo2: document.getElementById('tipo2').value,
-            sexo: sexoValue, // Asignar el valor del sexo obtenido
-            generacion: document.getElementById('generacion').value,
-            cuando: document.getElementById('cuando').value,
-            url: url}
-    if (document.getElementById('btnGuardar').value == 'Guardar') {
-        save(poke)
-    } else {
-        edit(id, poke)
-        id = 0
-    }limpiar()
-}})
+        if (await checkarNombre(num)) {
+            Swal.fire({
+                title: "ERROR",
+                icon: "error",
+                text:"El nombre del juego ya está registrado",
+                confirmButtonColor: '#00ffe1',
+                customClass:{
+                confirmButton: 'swal2-confirmm'
+                }
+            });
+        }
+        else{
+            Swal.fire(':D', 'Pokemon Registrado', 'success');
+            const url = await subirImagen(); // Espera a que se suba la imagen y obtener la URL
+            console.log(url)
+            if (document.querySelectorAll('.is-invalid').length == 0) {
+                const sexo = document.querySelector('input[name="sexo"]:checked');
+                const sexoValue = sexo ? sexo.value : '';
+                const poke = {
+                    numero: document.getElementById('numero').value,
+                    nom: document.getElementById('nombre').value,
+                    tipo: document.getElementById('tipo').value,
+                    tipo2: document.getElementById('tipo2').value,
+                    sexo: sexoValue, 
+                    generacion: document.getElementById('generacion').value,
+                    cuando: document.getElementById('cuando').value,
+                    url: url}
+            if (document.getElementById('btnGuardar').value == 'Guardar') {
+                save(poke)
+            } else {
+                edit(id, poke)
+                id = 0
+            }limpiar()
+        }
+        }
+    }
+})
 
 window.addEventListener('DOMContentLoaded', () => {
     getAll(poke => {
