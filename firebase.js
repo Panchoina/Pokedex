@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js"
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-storage.js";
 import { addDoc, collection, deleteDoc, doc, getFirestore, onSnapshot, getDoc, getDocs, query, where, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js"
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-storage.js";
 // DOCUMENTACIÓN
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,7 +20,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export const checkarNombre = async (num) => {
+export const checkarID = async (num) => {
     const q = query(collection(db, 'pokemon'), where('numero', '==', num));
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
