@@ -28,7 +28,7 @@ document.getElementById('btnGuardar').addEventListener('click', async () => {
                     title: "ERROR",
                     icon: "error",
                     text: "El Pokémon ya está registrado",
-                    confirmButtonColor: '#00ffe1',
+                    confirmButtonColor: '6f0b0b',
                     customClass: {
                         confirmButton: 'swal2-confirmm'
                     }
@@ -37,9 +37,9 @@ document.getElementById('btnGuardar').addEventListener('click', async () => {
             } else {
                 save(poke);
                 Swal.fire({
-                    text: "Se ha guardado exitosamente :D!",
+                    text: "Tu Pokemon Se Ha Registrado Con Exito!!!! :D",
                     icon: "success",
-                    confirmButtonColor: '#00ffe1',
+                    confirmButtonColor: '#69bea6',
                     customClass: {
                         popup: 'my-swal',
                         confirmButton: 'swal2-confirmm'
@@ -54,8 +54,8 @@ document.getElementById('btnGuardar').addEventListener('click', async () => {
                 text: "NO PODRÁS REVERTIR LOS CAMBIOS D:",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#7062d4",
+                confirmButtonColor: "#69bea6",
+                cancelButtonColor: "#6f0b0b",
                 confirmButtonText: "Editar"
             });
             if (confirmacion.isConfirmed) {
@@ -69,7 +69,7 @@ document.getElementById('btnGuardar').addEventListener('click', async () => {
                 Swal.fire({
                     text: "Se ha editado exitosamente :D!",
                     icon: "success",
-                    confirmButtonColor: '#00ffe1',
+                    confirmButtonColor: '#69bea6',
                     customClass: {
                         popup: 'my-swal',
                         confirmButton: 'swal2-confirmm'
