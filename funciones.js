@@ -1,4 +1,4 @@
-import { edit, getAll, remove, save, selectOne, subirImagen, checkarNombre } from "./firebase.js"
+import { edit, getAll, remove, save, selectOne, subirImagen, checkarID } from "./firebase.js"
 
 let id = 0
 
@@ -7,44 +7,81 @@ document.getElementById('btnGuardar').addEventListener('click', async () => {
         verificar(item.id)
     })
     const num = document.getElementById('numero').value.trim()
+    const url = await subirImagen(); // Espera a que se suba la imagen y obtener la URL
+    console.log(url)
     if (document.querySelectorAll('.is-invalid').length == 0) {
-        if (await checkarNombre(num)) {
-            Swal.fire({
-                title: "ERROR",
-                icon: "error",
-                text:"El nombre del juego ya está registrado",
-                confirmButtonColor: '#00ffe1',
-                customClass:{
-                confirmButton: 'swal2-confirmm'
-                }
-            });
-        }
-        else{
-            Swal.fire(':D', 'Pokemon Registrado', 'success');
-            const url = await subirImagen(); // Espera a que se suba la imagen y obtener la URL
-            console.log(url)
-            if (document.querySelectorAll('.is-invalid').length == 0) {
-                const sexo = document.querySelector('input[name="sexo"]:checked');
-                const sexoValue = sexo ? sexo.value : '';
-                const poke = {
-                    numero: document.getElementById('numero').value,
-                    nom: document.getElementById('nombre').value,
-                    tipo: document.getElementById('tipo').value,
-                    tipo2: document.getElementById('tipo2').value,
-                    sexo: sexoValue, 
-                    generacion: document.getElementById('generacion').value,
-                    cuando: document.getElementById('cuando').value,
-                    url: url}
-            if (document.getElementById('btnGuardar').value == 'Guardar') {
-                save(poke)
+            const sexo = document.querySelector('input[name="sexo"]:checked');
+            const sexoValue = sexo ? sexo.value : '';
+            const poke = {
+                numero: document.getElementById('numero').value,
+                nom: document.getElementById('nombre').value,
+                tipo: document.getElementById('tipo').value,
+                tipo2: document.getElementById('tipo2').value,
+                sexo: sexoValue, 
+                generacion: document.getElementById('generacion').value,
+                cuando: document.getElementById('cuando').value,
+                url: url}
+        if (id === 0) {
+            // Guardar nuevo registro
+            if (await checkarID(num)) {
+                Swal.fire({
+                    title: "ERROR",
+                    icon: "error",
+                    text: "El Pokémon ya está registrado",
+                    confirmButtonColor: '#00ffe1',
+                    customClass: {
+                        confirmButton: 'swal2-confirmm'
+                    }
+                });
+                document.getElementById('nombre').classList.add('is-invalid');
             } else {
-                edit(id, poke)
-                id = 0
-            }limpiar()
-        }
+                save(poke);
+                Swal.fire({
+                    text: "Se ha guardado exitosamente :D!",
+                    icon: "success",
+                    confirmButtonColor: '#00ffe1',
+                    customClass: {
+                        popup: 'my-swal',
+                        confirmButton: 'swal2-confirmm'
+                    }
+                });
+                limpiar();
+            }
+        } else {
+            // Editar registro existente
+            const confirmacion = await Swal.fire({
+                title: "¿Estás seguro que quieres editar tu registro?",
+                text: "NO PODRÁS REVERTIR LOS CAMBIOS D:",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#7062d4",
+                confirmButtonText: "Editar"
+            });
+            if (confirmacion.isConfirmed) {
+                Swal.fire({
+                    title: "Editando",
+                    text: "Estás editando tu registro actual",
+                    icon: "info",
+                    confirmButtonColor: '#00ffe1'
+                });
+                edit(id, poke);
+                Swal.fire({
+                    text: "Se ha editado exitosamente :D!",
+                    icon: "success",
+                    confirmButtonColor: '#00ffe1',
+                    customClass: {
+                        popup: 'my-swal',
+                        confirmButton: 'swal2-confirmm'
+                    }
+                });
+                id = 0;
+                limpiar();
+                document.getElementById('btnGuardar').value = 'Guardar';
+            }
         }
     }
-})
+});
 
 window.addEventListener('DOMContentLoaded', () => {
     getAll(poke => {
